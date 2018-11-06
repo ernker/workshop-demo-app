@@ -22,5 +22,15 @@ pytest --cov-report xml --cov-report term --cov ./lib/'''
         cobertura(failNoReports: true, failUnhealthy: true, failUnstable: true, coberturaReportFile: 'coverage.xml', lineCoverageTargets: '90,50,80')
       }
     }
+    stage('deployment') {
+      when {
+        branch 'master'
+      }
+      steps {
+        input 'is this ready to go live?'
+        sh '''cd deployment
+sh provision.sh'''
+      }
+    }
   }
 }
