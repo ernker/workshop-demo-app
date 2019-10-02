@@ -8,11 +8,31 @@ steps:
       - pip install -r requirements.txt
       - pytest --cov-report xml --cov-report term --cov ./lib
 
+---
+
 steps:
   - name: publish
     image: plugins/ecr
     settings:
-      access_key: a50d28f4dd477bc184fbd10b376de753
-      secret_key: bc5785d3ece6a9cdefa42eb99b58986f9095ff1c
+      access_key:
+        from_secret: access_key
+      secret_key:
+        from_secret: secret_key
       repo: 689970811091.dkr.ecr.eu-west-1.amazonaws.com/drone
       registry: 689970811091.dkr.ecr.us-west-1.amazonaws.com
+
+---
+
+kind: secret
+name: access_key
+get:
+  path: staging/drone
+  name: access_key
+
+---
+
+kind: secret
+name: secret_key
+get:
+  path: staging/drone
+  name: secret_key
