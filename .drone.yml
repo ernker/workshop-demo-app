@@ -2,8 +2,8 @@ kind: pipeline
 name: workshop-demo-app
 
 steps:
-- name: pytest
-  image: python2
+- name: pytest2
+  image: python
   commands:
   - pip install -r requirements.txt
   - pytest --cov-report xml --cov-report term --cov ./lib/
